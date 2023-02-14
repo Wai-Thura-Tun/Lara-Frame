@@ -11,14 +11,14 @@ class ProjectFrameCommand extends Command
      *
      * @var string
      */
-    protected $signature = 'command:name';
+    protected $signature = 'make:frame {name*}';
 
     /**
      * The console command description.
      *
      * @var string
      */
-    protected $description = 'Command description';
+    protected $description = 'A frame for laravel project';
 
     /**
      * Create a new command instance.
@@ -37,6 +37,8 @@ class ProjectFrameCommand extends Command
      */
     public function handle()
     {
+        $arguments = $this->arguments();
+        $this->info("Love you");
         return 0;
     }
 }
