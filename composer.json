@@ -1,0 +1,25 @@
+{
+    "name": "waithuratun/lara-frame",
+    "description": "This is a frame for laravel project.",
+    "type": "library",
+    "license": "MIT",
+    "autoload": {
+        "psr-4": {
+            "Waithuratun\\LaraFrame\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "Wai Thura"
+        }
+    ],
+    "minimum-stability": "dev",
+    "require": {},
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Waithuratun\\LaraFrame\\ProjectFrameServiceProvider"
+            ]
+        }
+    }
+}
