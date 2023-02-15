@@ -82,8 +82,8 @@ class ProjectFrameCommand extends Command
         $serviceClass = $name . self::CS;
         $daoPath = $this->dirArray[0]."/".$daoClass;
         $servicePath = $this->dirArray[1]."/".$serviceClass;
-        $daoContent = $this->createContent(substr($daoPath,-4),substr($daoClass,-4));
-        $serviceContent = $this->createContent(substr($servicePath,-4),substr($serviceClass,-4));
+        $daoContent = $this->createContent($daoPath,$daoClass);
+        $serviceContent = $this->createContent($servicePath,$serviceClass);
         $this->createFile($daoPath,$daoContent);
         $this->createFile($servicePath, $serviceContent);
     }
@@ -93,11 +93,13 @@ class ProjectFrameCommand extends Command
             $newFile = fopen($path,'w');
             fwrite($newFile,$content);
             fclose($newFile);
-            $this->info($path."has been created");
+            $this->info($path." has been created");
         }
     }
-
     public function createContent(string $namespace,string $class) {
-        return "<?php\n\tnamespace\s".$namespace."\n\tclass\s".$class."\s{\n\n}";
+        $filterNS = str_replace("/","\\",ucfirst(substr($namespace,0,-4)));
+        $this->info($filterNS);
+        $filterClass = ucfirst(substr($class,0,-4));
+        return "<?php\n\tnamespace ".$filterNS.";\n\tinterface ".$filterClass." {\n\n\t}";
     }
 }
