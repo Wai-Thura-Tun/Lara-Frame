@@ -63,6 +63,7 @@ class ProjectFrameCommand extends Command
     public function makeFrame(string $name) {
         $this->makeDir();
         $this->makeInterfaceFile($name);
+        $this->makeFrameFile($name);
     }
 
     public function makeDir() {
@@ -74,7 +75,14 @@ class ProjectFrameCommand extends Command
     }
 
     public function makeFrameFile(string $name) {
-        
+        $daoClass = $name . self::D;
+        $serviceClass = $name . self::S;
+        $daoPath = $this->dirArray[2] . "/" . $daoClass;
+        $servicePath = $this->dirArray[3] . "/" . $serviceClass;
+        $daoContent = $this->createContent($daoPath, $daoClass, "class");
+        $serviceContent = $this->createContent($servicePath,$serviceClass,"class");
+        $this->createFile($daoPath,$daoContent);
+        $this->createFile($servicePath, $serviceContent);
     }
 
     public function makeInterfaceFile(string $name) {
@@ -82,8 +90,8 @@ class ProjectFrameCommand extends Command
         $serviceClass = $name . self::CS;
         $daoPath = $this->dirArray[0]."/".$daoClass;
         $servicePath = $this->dirArray[1]."/".$serviceClass;
-        $daoContent = $this->createContent($daoPath,$daoClass);
-        $serviceContent = $this->createContent($servicePath,$serviceClass);
+        $daoContent = $this->createContent($daoPath,$daoClass,"interface");
+        $serviceContent = $this->createContent($servicePath,$serviceClass,"interface");
         $this->createFile($daoPath,$daoContent);
         $this->createFile($servicePath, $serviceContent);
     }
@@ -96,10 +104,10 @@ class ProjectFrameCommand extends Command
             $this->info($path." has been created");
         }
     }
-    public function createContent(string $namespace,string $class) {
+    public function createContent(string $namespace,string $class,string $type) {
         $filterNS = str_replace("/","\\",ucfirst(substr($namespace,0,-4)));
         $this->info($filterNS);
         $filterClass = ucfirst(substr($class,0,-4));
-        return "<?php\n\tnamespace ".$filterNS.";\n\tinterface ".$filterClass." {\n\n\t}";
+        return "<?php\n\tnamespace ".$filterNS.";\n\"".$type." ".$filterClass." {\n\n\t}";
     }
 }
