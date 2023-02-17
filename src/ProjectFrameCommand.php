@@ -108,6 +108,6 @@ class ProjectFrameCommand extends Command
         $filterNS = str_replace("/","\\",ucfirst(substr($namespace,0,-4)));
         $this->info($filterNS);
         $filterClass = ucfirst(substr($class,0,-4));
-        return "<?php\n\tnamespace ".$filterNS.";\n\"".$type." ".$filterClass." {\n\n\t}";
+        return "<?php\n\tnamespace ".$filterNS.";\n\t".$type." ".$filterClass." {\n\n\t}";
     }
 }

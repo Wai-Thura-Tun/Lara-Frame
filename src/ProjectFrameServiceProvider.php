@@ -13,5 +13,21 @@ class ProjectFrameServiceProvider extends ServiceProvider {
         ProjectFrameCommand::class
       ]);
     }
+    $this->bindFile("Dao","Dao");
+    $this->bindFile("Service","Services");
+  }
+
+  private function bindFile(string $type,string $container) {
+    $interfacefiles = glob("app/".$container."/*".$type.".php");
+    $files = glob("app/Contracts".$container."/*".$type.".php");
+    if($interfacefiles && $files) {
+      foreach($files as $key => $value) {
+        $interfaceFile = "App\\Contracts\\" . $container . "\\".substr($value,0,-4);
+        $classFile = "App\\".$container."\\".substr($interfaceFile[$key],0,-4);
+        if(!$this->app->bound($interfaceFile)) {
+          $this->app->bind($interfaceFile,$classFile);
+        }
+      }
+    }
   }
 }
