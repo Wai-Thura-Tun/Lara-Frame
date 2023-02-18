@@ -13,7 +13,7 @@
             "name": "Wai Thura"
         }
     ],
-    "minimum-stability": "dev",
+    "minimum-stability": "stable",
     "require": {},
     "extra": {
         "laravel": {
