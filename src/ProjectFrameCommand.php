@@ -3,6 +3,7 @@
 namespace Waithuratun\LaraFrame;
 
 use Illuminate\Console\Command;
+use Illuminate\Support\Facades\Artisan;
 
 class ProjectFrameCommand extends Command
 {
@@ -54,6 +55,13 @@ class ProjectFrameCommand extends Command
         $bar->start();
         foreach($arguments as $value) {
             $this->makeFrame(ucfirst($value));
+            if(!file_exists("app/Models/".ucfirst($value)) && !file_exists("app/Http/Controllers/".ucfirst($value))) {
+                Artisan::call('make:model',[
+                    'name' => ucfirst($value),
+                    '--controller' => true,
+                    '--migration' => true,
+                ]);
+            }
             $bar->advance();
         }
         $bar->finish();
